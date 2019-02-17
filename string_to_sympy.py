@@ -189,11 +189,8 @@ def string_to_sympy(string):
     try :
         program_list = parser(lexer(string))
         program_list[-1] = fix_list(program_list[-1])
-        print(program_list[-1])
         init_printing()
         evaluated = eval(to_string(program_list[-1]))
-        print(to_string(program_list[-1]))
-        print(evaluated)
         pprint(evaluated)
     except (NameError, AttributeError, SyntaxError):
         return
