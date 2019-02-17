@@ -1,3 +1,7 @@
+
+from sympy import *
+
+
 operators = {
     '+':'Add',
     '*':'Mul',
@@ -164,8 +168,13 @@ def to_string(lyst):
     return result
 
 def string_to_sympy(string):
-    program_list = parser(lexer(string))
-    return to_string(program_list[-1])
+    try :
+        program_list = parser(lexer(string))
+        init_printing()
+        evaluated = eval(to_string(program_list[-1]))
+        pprint(evaluated)
+    except (NameError, AttributeError, SyntaxError):
+        return
 
 if __name__ == '__main__':
     print(string_to_sympy('(+ 1 a (* 2 4 5))'))
