@@ -127,6 +127,7 @@ def parser(lexed):
     if stack:
         raise Exception("stack:", stack)
     return retval
+
 def get_func(name):
     if name in operators:
         return operators[name]
@@ -168,4 +169,4 @@ def string_to_sympy(string):
 
 if __name__ == '__main__':
     print(string_to_sympy('(+ 1 a (* 2 4 5))'))
-    
+   
