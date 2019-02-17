@@ -167,11 +167,33 @@ def to_string(lyst):
         result += 'Symbol(\'' + lyst + '\')'
     return result
 
+
+    
+def fix_list(l):
+    f = lambda l : list(map(fix_list,l))
+    if type(l) == list and l != [] and l[0] == '-':
+        if len(l) == 2:
+            k = ['*', '-1', fix_list(l[1])]
+        elif len(l) == 3:
+            
+            k = ['+', fix_list(l[1]), ['*', '-1', fix_list(l[2])]]
+        else:
+            k = ['+', fix_list(l[1]), ['*', '-1', ['+'] + f(l[2:])]]
+        #k = list(map(fix_list, k[1:]))
+        return k
+    else:
+        return l
+
+
 def string_to_sympy(string):
     try :
         program_list = parser(lexer(string))
+        program_list[-1] = fix_list(program_list[-1])
+        print(program_list[-1])
         init_printing()
         evaluated = eval(to_string(program_list[-1]))
+        print(to_string(program_list[-1]))
+        print(evaluated)
         pprint(evaluated)
     except (NameError, AttributeError, SyntaxError):
         return
